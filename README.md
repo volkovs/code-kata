@@ -1,4 +1,4 @@
 code-kata
 =========
 
-Coding skills fitness
+Private coding skills fitness
