@@ -15,9 +15,9 @@ import java.util.Stack;
  */
 public class Problem81 {
 
-    private static long completePaths = 0;
+    private static int completePaths = 0;
 
-    private static long minimumTotal = Long.MAX_VALUE;
+    private static int minimumTotal = Integer.MAX_VALUE;
 
     private static PathNode result = null;
 
@@ -30,24 +30,33 @@ public class Problem81 {
 //                        "537, 699, 497, 121, 956" + "\n" +
 //                        "805, 732, 524, 37, 331");
         matrix.out();
+        IntegerMatrix paths = new IntegerMatrix(matrix.rowsCount(), Integer.MAX_VALUE);
+        paths.out();
 
-
-        generateNext(new PathNode(matrix, 0, 0, null));
+        generateNext(new PathNode(matrix, 0, 0, null), paths);
 
         System.out.println("Generated paths: " + completePaths);
         System.out.println("The shortest path is: " + result.getTotal());
         System.out.println("The shortest path is: " + result.toString());
     }
 
-    private static void generateNext(PathNode node) {
-        PathNode nextNode1 = node.getNextHorizontally();
+    private static void generateNext(PathNode node, IntegerMatrix paths) {
+
+        if (paths.get(node.row, node.column) <= node.getTotal()) {
+            // already generated shorter path at that point - break this sequence
+            return;
+        } else {
+            paths.set(node.row, node.column, node.getTotal());
+        }
+
+                PathNode nextNode1 = node.getNextHorizontally();
         if (nextNode1 != null) {
-            generateNext(nextNode1);
+            generateNext(nextNode1, paths);
         }
 
         PathNode nextNode2 = node.getNextVertically();
         if (nextNode2 != null) {
-            generateNext(nextNode2);
+            generateNext(nextNode2, paths);
         }
 
         // path completed - adding to the list
@@ -71,7 +80,7 @@ public class Problem81 {
         private int row;
         private int column;
         private PathNode previous;
-        private long total;
+        private int total;
         private int value;
 
         public PathNode(IntegerMatrix matrix, int row, int column, PathNode previous) {
@@ -79,7 +88,7 @@ public class Problem81 {
             this.row = row;
             this.column = column;
             this.previous = previous;
-            long previousTotal = previous == null ? 0 : previous.getTotal();
+            int previousTotal = previous == null ? 0 : previous.getTotal();
             this.value = matrix.get(row, column);
             this.total = previousTotal + value;
         }
@@ -100,7 +109,7 @@ public class Problem81 {
             return new PathNode(matrix, nextRow, column, this);
         }
 
-        public long getTotal() {
+        public int getTotal() {
             return total;
         }
 
@@ -118,6 +127,15 @@ public class Problem81 {
     public static class IntegerMatrix {
 
         private int[][] cells;
+
+        public IntegerMatrix(int size, int initValue) throws IOException, URISyntaxException {
+            cells = new int[size][size];
+            for (int row = 0; row < size; row++) {
+                for (int column = 0; column < size; column++) {
+                    cells[row][column] = initValue;
+                }
+            }
+        }
 
         public IntegerMatrix(String matrixSource) throws IOException, URISyntaxException {
             if (matrixSource.startsWith("http")) {
@@ -141,6 +159,10 @@ public class Problem81 {
 
         public int get(int row, int column) {
             return cells[row][column];
+        }
+
+        public void set(int row, int column, int value) {
+            cells[row][column] = value;
         }
 
         public void out() {
