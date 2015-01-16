@@ -1,14 +1,10 @@
-package euler.problem81;
+package euler.problem;
 
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
 
 /**
  * Created by Mihails Volkovs on 2015.01.12.
