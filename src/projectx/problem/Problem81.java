@@ -1,4 +1,4 @@
-package euler.problem;
+package projectx.problem;
 
 import org.apache.commons.io.IOUtils;
 
