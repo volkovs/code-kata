@@ -1,13 +1,12 @@
 package lv.volkovs.kata09;
 
-import static org.junit.Assert.assertEquals;
+import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
+import org.junit.Test;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
-
-import com.google.common.collect.Lists;
+import static org.junit.Assert.*;
 
 public class CheckOutTest {
 
