@@ -1,93 +1,175 @@
 package projectx.problem;
 
 import com.google.common.base.Preconditions;
+import org.junit.Test;
+import projectx.utils.PermutationGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by Mihails Volkovs on 2015.02.02.
  */
 public class Problem31 {
 
+            private static final int TOTAL_CONSTRAINT = 200;
+//    private static final int TOTAL_CONSTRAINT = 10;
+
     private int result = 0;
 
     public static void main(String... args) {
-        CoinsCombination combination = new CoinsCombination();
-        System.out.println(combination);
-        int combinations = 1;
+        CoinsCombination combination = new CoinsCombination(TOTAL_CONSTRAINT);
+        int combinations = 0;
         while (combination != null) {
             combination = combination.next();
-            combinations++;
-            System.out.println(combination);
+            if (combination != null) {
+                combinations++;
+                System.out.println(combinations + ") " + combination);
+            }
         }
         System.out.println(combinations);
     }
 
     private static class CoinsCombination {
 
-//        private static final int TOTAL_CONSTRAINT = 200;
-        private static final int TOTAL_CONSTRAINT = 10;
+                private static final int[] COINS = {200, 100, 50, 20, 10, 5, 2, 1};
+//        private static final int[] COINS = {10, 5, 2, 1};
 
-//        private static final int[] COINS = {1, 2, 5, 10, 20, 50, 100, 200};
-        private static final int[] COINS = {1, 2, 5, 10};
+        private int targetTotal;
 
-        private int index = 0;
+        private int[] combination;
 
-        private List<Integer> combination = new ArrayList<Integer>();
+        public CoinsCombination(int targetTotal){
+            this(targetTotal, new int[COINS.length]);
+        }
 
-        public CoinsCombination(List<Integer> combination, int index) {
-            Preconditions.checkArgument(getTotal(combination) == TOTAL_CONSTRAINT);
+        public CoinsCombination(int targetTotal, int[] combination){
+            this.targetTotal = targetTotal;
+            Preconditions.checkArgument(combination.length == COINS.length);
             this.combination = combination;
-            this.index = index;
         }
 
-        public CoinsCombination() {
-            while (getTotal(combination) < TOTAL_CONSTRAINT) {
-                combination.add(COINS[0]);
+        public int getTotal() {
+            int result = 0;
+            for (int i = 0; i < combination.length; i++) {
+                result += COINS[i] * combination[i];
+            }
+            return result;
+        }
+
+        public void roll() {
+            roll(combination.length - 1);
+        }
+
+        private void roll(int index) {
+            if (index < 0) {
+                return;
+            }
+            combination[index] = combination[index] + 1;
+            if (combination[index] * COINS[index] > targetTotal) {
+                combination[index] = 0;
+                roll(index - 1);
             }
         }
 
-        private int getTotal(List<Integer> combination) {
-            return combination.stream().mapToInt(Integer::intValue).sum();
+        public int[] getCombination() {
+            return combination;
         }
 
-        public CoinsCombination next() {
-            List<Integer> nextCombination = new ArrayList<Integer>(combination);
-            int nextIndex = increment(nextCombination, index);
-            return new CoinsCombination(nextCombination, nextIndex);
+        private CoinsCombination next() {
+            int[] newCombination = Arrays.copyOf(combination, combination.length);
+            CoinsCombination candidate = new CoinsCombination(targetTotal, newCombination);
+            candidate.roll();
+
+            int[] initState = new int[combination.length];
+            boolean allCombinationsEnumerated = Arrays.equals(candidate.getCombination(), initState);
+            while (candidate.getTotal() != targetTotal && !allCombinationsEnumerated) {
+                candidate.roll();
+                allCombinationsEnumerated = Arrays.equals(candidate.getCombination(), initState);
+            }
+
+            // all combinations enumerated
+            if (allCombinationsEnumerated) {
+                return null;
+            }
+            return candidate;
         }
 
-        private int increment(List<Integer> combination, int index) {
-            while (index > combination.size() - 1) {
-                combination.add(COINS[0]);
-            }
-            Integer oldValue = combination.get(index);
-            int newValue = increment(oldValue);
-            combination.set(index, newValue);
-            while (getTotal(combination) > TOTAL_CONSTRAINT && combination.size() > 1) {
-                combination.remove(combination.size() - 1);
-            }
-            int newIndex = index + 1;
-            if (newIndex > combination.size()) {
-                newIndex = 0;
-            }
-            return newIndex;
-        }
-
-        private int increment(int coin) {
-            for (int i = 0; i < COINS.length; i++) {
-                if (COINS[i] > coin) {
-                    return COINS[i];
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < combination.length; i++) {
+                for (int j = 0; j < combination[i]; j++) {
+                    sb.append( COINS[i]+ ",");
                 }
             }
-            return COINS[0];
+            return getTotal() + ": " + sb.toString();
         }
 
-        public String toString() {
-            return getTotal(combination) + ": " + combination;
+        public static String toString(int[] combination) {
+            return Arrays.toString(combination);
         }
+    }
 
+    @Test
+    public void getTotal() {
+        CoinsCombination combination = new CoinsCombination(10);
+        assertEquals(0, combination.getTotal());
+
+        combination = new CoinsCombination(10, new int[]{4, 3, 2, 1});
+        assertEquals(60, combination.getTotal());
+    }
+
+    @Test
+    public void roll() {
+        CoinsCombination combination = new CoinsCombination(10);
+        assertEquals("[0, 0, 0, 0]", Arrays.toString(combination.getCombination()));
+        combination.roll();
+        assertEquals("[0, 0, 0, 1]", Arrays.toString(combination.getCombination()));
+        combination.roll();
+        assertEquals("[0, 0, 0, 2]", Arrays.toString(combination.getCombination()));
+
+        combination = new CoinsCombination(10, new int[]{0, 0, 0, 10});
+        assertEquals("[0, 0, 0, 10]", Arrays.toString(combination.getCombination()));
+        combination.roll();
+        assertEquals("[0, 0, 1, 0]", Arrays.toString(combination.getCombination()));
+
+        combination = new CoinsCombination(10, new int[]{0, 0, 10, 10});
+        assertEquals("[0, 0, 10, 10]", Arrays.toString(combination.getCombination()));
+        combination.roll();
+        assertEquals("[0, 1, 0, 0]", Arrays.toString(combination.getCombination()));
+
+        combination = new CoinsCombination(10, new int[]{0, 10, 10, 10});
+        assertEquals("[0, 10, 10, 10]", Arrays.toString(combination.getCombination()));
+        combination.roll();
+        assertEquals("[1, 0, 0, 0]", Arrays.toString(combination.getCombination()));
+
+        combination = new CoinsCombination(10, new int[]{10, 10, 10, 10});
+        assertEquals("[10, 10, 10, 10]", Arrays.toString(combination.getCombination()));
+        combination.roll();
+        assertEquals("[0, 0, 0, 0]", Arrays.toString(combination.getCombination()));
+    }
+
+    @Test
+    public void next() {
+        CoinsCombination combination = new CoinsCombination(10);
+        assertEquals("[0, 0, 0, 0]", Arrays.toString(combination.getCombination()));
+        combination = combination.next();
+        assertEquals("[0, 0, 0, 10]", Arrays.toString(combination.getCombination()));
+        combination = combination.next();
+        assertEquals("[0, 0, 1, 8]", Arrays.toString(combination.getCombination()));
+
+        combination = new CoinsCombination(10, new int[]{10, 10, 10, 10});
+        CoinsCombination next = combination.next();
+        assertNull(next);
+    }
+
+    @Test
+    public void testToString() {
+        CoinsCombination combination = new CoinsCombination(10, new int[]{1,2,3,4});
+        assertEquals("30: 10,5,5,2,2,2,1,1,1,1,", combination.toString());
     }
 
 }
