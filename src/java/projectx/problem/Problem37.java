@@ -1,12 +1,9 @@
 package projectx.problem;
 
-import com.google.common.collect.Lists;
 import org.junit.Test;
 
-import java.util.List;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static projectx.utils.PrimeUtils.isPrime;
 
 /**
  * Created by Mihails Volkovs on 2015.02.15.
@@ -43,25 +40,6 @@ public class Problem37 {
             return true;
         }
         return false;
-    }
-
-    private static boolean isPrime(int number) {
-        if (number == 1) {
-            return false;
-        }
-        for (int i = 2; i <= Math.sqrt(number); i++) {
-            if (number % i == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Test
-    public void isPrime() {
-        assertTrue(isPrime(3797));
-        assertFalse(isPrime(3798));
-        assertFalse(isPrime(17 * 17));
     }
 
     @Test
