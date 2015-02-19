@@ -5,7 +5,7 @@ package projectx.utils;
  */
 public class PrimeUtils {
 
-    public static boolean isPrime(int number) {
+    public static boolean isPrime(long number) {
         if (number < 2) {
             return false;
         }
