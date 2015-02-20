@@ -17,7 +17,7 @@ public class Problem41 {
     public static void main(String... args) {
         for (int digits = UPPER_LIMIT; digits > 0; digits--) {
             String salt = "";
-            for (int i = UPPER_LIMIT; i > 0; i--) {
+            for (int i = digits; i > 0; i--) {
                 salt += i;
             }
             System.out.println("Generator: " + salt);
