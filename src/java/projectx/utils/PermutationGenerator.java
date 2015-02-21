@@ -1,12 +1,15 @@
 package projectx.utils;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang.ArrayUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Mihails Volkovs on 2015.02.02.
@@ -116,14 +119,34 @@ public class PermutationGenerator {
         return permutations;
     }
 
+    public List<Integer> getPermutationsAsInts() {
+        return getPermutationsAsInts(true);
+    }
+
+    public List<Integer> getPermutationsAsInts(boolean unique) {
+        List<Integer> result = Lists.newArrayList();
+        for (String[] permutation : permutations) {
+            Set<String> digits = Sets.newHashSet();
+            if (unique) {
+                for (String digit : permutation) {
+                    digits.add(digit);
+                }
+            }
+            if (!unique || digits.size() == permutation.length) {
+                result.add(Integer.parseInt(Joiner.on("").join(permutation)));
+            }
+        }
+        return result;
+    }
+
     public static void main(String... args) {
         PermutationGenerator generator = new PermutationGenerator(12345, 3);
         generator.generate();
-        for (String[] permutation : generator.permutations) {
+        for (String[] permutation : generator.getPermutations()) {
             System.out.println(ArrayUtils.toString(permutation));
         }
-        System.out.println(generator.permutationsCount);
-        System.out.println(generator.permutations.size());
+        System.out.println(generator.getPermutationsCount());
+        System.out.println(generator.getPermutations().size());
     }
 
 }
