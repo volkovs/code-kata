@@ -14,14 +14,14 @@ public class Problem33 {
         long productShortDenominator = 1;
 
         for (int numerator = 11; numerator < UPPER_LIMIT; numerator++) {
-            for(int denominator = numerator + 1; denominator < UPPER_LIMIT; denominator++) {
+            for (int denominator = numerator + 1; denominator < UPPER_LIMIT; denominator++) {
                 for (int commonDivider = 1; commonDivider < 10; commonDivider++) {
                     String numeratorAsString = "" + numerator;
                     String denomenatorAsString = "" + denominator;
                     String commonDividerAsString = "" + commonDivider;
                     if (numeratorAsString.contains(commonDividerAsString) && denomenatorAsString.contains(commonDividerAsString)) {
-                        Double newNumerator =  Double.parseDouble(numeratorAsString.replaceFirst(commonDividerAsString, ""));
-                        Double newDenominator =  Double.parseDouble(denomenatorAsString.replaceFirst(commonDividerAsString, ""));
+                        Double newNumerator = Double.parseDouble(numeratorAsString.replaceFirst(commonDividerAsString, ""));
+                        Double newDenominator = Double.parseDouble(denomenatorAsString.replaceFirst(commonDividerAsString, ""));
                         if (newNumerator / newDenominator == (0.0 + numerator) / denominator) {
                             productNumerator *= numerator;
                             productDenominator *= denominator;

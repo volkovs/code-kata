@@ -1,7 +1,6 @@
 package projectx.problem;
 
 import com.google.common.collect.Lists;
-import com.sun.corba.se.spi.orbutil.closure.Closure;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -51,7 +50,7 @@ public class Problem45 {
     }
 
     private static long hexagonal(long n) {
-        return n * (2* n - 1);
+        return n * (2 * n - 1);
     }
 
     private static class Value implements Comparable<Value> {
@@ -75,12 +74,12 @@ public class Problem45 {
 
         @Override
         public boolean equals(Object o) {
-            return value == ((Value)o).value;
+            return value == ((Value) o).value;
         }
 
         @Override
         public String toString() {
-            return String.format("f(%s)=%s", n, value );
+            return String.format("f(%s)=%s", n, value);
         }
 
         public void increment() {

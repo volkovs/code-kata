@@ -4,12 +4,10 @@ import com.google.common.collect.Sets;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Mihails Volkovs on 2015.02.25.
@@ -29,7 +27,7 @@ public class Problem52 {
 
     private static boolean isPermutationOf(int number) {
         for (int multiplier = 2; multiplier <= UPPER_LIMIT; multiplier++) {
-            if (!isPermutationOf(number, number*multiplier)) {
+            if (!isPermutationOf(number, number * multiplier)) {
                 return false;
             }
         }

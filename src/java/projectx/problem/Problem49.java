@@ -1,16 +1,10 @@
 package projectx.problem;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang.ArrayUtils;
 import projectx.utils.PermUtils;
 import projectx.utils.PermutationGenerator;
 import projectx.utils.PrimeUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.PrimitiveIterator;
 import java.util.Set;
 import java.util.stream.Collectors;
 

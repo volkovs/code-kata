@@ -2,7 +2,6 @@ package projectx.problem;
 
 import com.google.common.base.Preconditions;
 import org.junit.Test;
-import projectx.utils.PermutationGenerator;
 
 import java.util.Arrays;
 
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertNull;
  */
 public class Problem31 {
 
-            private static final int TOTAL_CONSTRAINT = 200;
+    private static final int TOTAL_CONSTRAINT = 200;
 //    private static final int TOTAL_CONSTRAINT = 10;
 
     private int result = 0;
@@ -34,18 +33,18 @@ public class Problem31 {
 
     private static class CoinsCombination {
 
-                private static final int[] COINS = {200, 100, 50, 20, 10, 5, 2, 1};
+        private static final int[] COINS = {200, 100, 50, 20, 10, 5, 2, 1};
 //        private static final int[] COINS = {10, 5, 2, 1};
 
         private int targetTotal;
 
         private int[] combination;
 
-        public CoinsCombination(int targetTotal){
+        public CoinsCombination(int targetTotal) {
             this(targetTotal, new int[COINS.length]);
         }
 
-        public CoinsCombination(int targetTotal, int[] combination){
+        public CoinsCombination(int targetTotal, int[] combination) {
             this.targetTotal = targetTotal;
             Preconditions.checkArgument(combination.length == COINS.length);
             this.combination = combination;
@@ -102,7 +101,7 @@ public class Problem31 {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < combination.length; i++) {
                 for (int j = 0; j < combination[i]; j++) {
-                    sb.append( COINS[i]+ ",");
+                    sb.append(COINS[i] + ",");
                 }
             }
             return getTotal() + ": " + sb.toString();
@@ -168,7 +167,7 @@ public class Problem31 {
 
     @Test
     public void testToString() {
-        CoinsCombination combination = new CoinsCombination(10, new int[]{1,2,3,4});
+        CoinsCombination combination = new CoinsCombination(10, new int[]{1, 2, 3, 4});
         assertEquals("30: 10,5,5,2,2,2,1,1,1,1,", combination.toString());
     }
 

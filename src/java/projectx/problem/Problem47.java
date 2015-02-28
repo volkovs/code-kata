@@ -22,13 +22,13 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 public class Problem47 {
-    
+
     private static final int UPPER_LIMIT = 4;
-    
+
     public static final void main(String... args) {
         findConsecutiveNumbers(UPPER_LIMIT);
     }
-    
+
     private static List<Integer> findConsecutiveNumbers(int limit) {
         List<Integer> numbers = Lists.newArrayList();
         boolean consecutive = false;
@@ -53,7 +53,7 @@ public class Problem47 {
         }
         return numbers;
     }
-    
+
     private static Set<Integer> findPrimeFactors(int number) {
         Set<Integer> result = Sets.newHashSet();
         for (int factor = 2; factor < Math.sqrt(number); factor++) {
@@ -69,13 +69,13 @@ public class Problem47 {
         }
         return result;
     }
-    
+
     @Test
     public void findConsecutiveNumbers() {
         assertEquals(Arrays.asList(14, 15), findConsecutiveNumbers(2));
         assertEquals(Arrays.asList(644, 645, 646), findConsecutiveNumbers(3));
     }
-    
+
     @Test
     public void findPrimeFactors() {
         assertSet(findPrimeFactors(14), 2, 7);

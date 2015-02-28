@@ -1,21 +1,25 @@
 package projectx.problem;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mihails Volkovs on 2015.01.16.
  */
 public class Problem243 {
 
-//    private static double targetRatio = 4.0 / 10.0;
+    //    private static double targetRatio = 4.0 / 10.0;
     private static double targetRatio = 15499.0 / 94744.0;
 
     private static double minimalRatio = Double.MAX_VALUE;
 
     private static Map<Integer, List<Integer>> cachedCommonDividers = new HashMap<>();
 
-//    private static List<Integer> primeNumbers = new ArrayList<>();
+    //    private static List<Integer> primeNumbers = new ArrayList<>();
     private static LinkedList<Integer> primeNumbers = new LinkedList<>();
+
     static {
         primeNumbers.add(2);
     }
@@ -24,7 +28,7 @@ public class Problem243 {
         int denominator = 2;
         double ratio = Double.MAX_VALUE;
         System.out.println("Target ratio: " + targetRatio);
-        while(ratio >= targetRatio) {
+        while (ratio >= targetRatio) {
             ratio = getRatio(++denominator);
 //            System.out.println("Current ratio: " + ratio);
         }

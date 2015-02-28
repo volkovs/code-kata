@@ -19,7 +19,7 @@ public class Problem55 {
 
     public static final void main(String... args) {
         int lychrelNumberCount = 0;
-        for(int number = 1; number < 10_000; number++) {
+        for (int number = 1; number < 10_000; number++) {
             if (isLychrelNumber(number)) {
                 lychrelNumberCount++;
             }
@@ -39,7 +39,7 @@ public class Problem55 {
         return true;
     }
 
-    private static boolean isPalindrome(String number ) {
+    private static boolean isPalindrome(String number) {
         return StringUtils.reverse(number).equals(number);
     }
 

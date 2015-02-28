@@ -1,7 +1,5 @@
 package projectx.problem;
 
-import com.google.common.math.BigIntegerMath;
-
 /**
  * Created by Mihails Volkovs on 2015.01.31.
  */

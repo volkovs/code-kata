@@ -3,7 +3,6 @@ package projectx.problem;
 import org.junit.Test;
 import projectx.utils.PrimeUtils;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**

@@ -45,7 +45,7 @@ public class Problem81 {
             paths.set(node.row, node.column, node.getTotal());
         }
 
-                PathNode nextNode1 = node.getNextHorizontally();
+        PathNode nextNode1 = node.getNextHorizontally();
         if (nextNode1 != null) {
             generateNext(nextNode1, paths);
         }

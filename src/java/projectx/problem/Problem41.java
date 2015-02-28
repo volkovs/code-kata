@@ -1,8 +1,6 @@
 package projectx.problem;
 
-import com.google.common.base.Joiner;
 import projectx.utils.PermUtils;
-import projectx.utils.PermutationGenerator;
 import projectx.utils.PrimeUtils;
 
 import java.util.List;
